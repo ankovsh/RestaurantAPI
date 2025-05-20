@@ -1,0 +1,64 @@
+### Общие системные файлы ###
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+### Среда разработки (Visual Studio, Rider, VS Code) ###
+.vs/
+.idea/
+.vscode/
+*.user
+*.suo
+*.userprefs
+*.vsp
+*.vspscc
+*.sln.iml
+*.csproj.user
+*.jetBrains.*
+_ReSharper.*
+*.dotCover
+
+### Билды и выходные файлы ###
+bin/
+obj/
+[Bb]uild/
+[Dd]ebug/
+[Rr]elease/
+*.exe
+*.dll
+*.pdb
+*.cache
+*.config
+*.manifest
+*.xml
+*.xlsx
+*.docx
+*.nupkg
+*.msi
+*.cachefile
+
+### Зависимости (NuGet, пакеты) ###
+packages/
+[Nn]u[Gg]et/
+*.nupkg
+
+### Тестовые и лог-файлы ###
+TestResults/
+*.testlog
+*.log
+*.trx
+
+### Файлы окружения и конфиги ###
+.env
+*.env
+appsettings.Local.json
+appsettings.Development.json
+appsettings.*.json
+secrets.json
+
+### Дополнительно (если используется Entity Framework) ###
+Migrations/
+*.db
+*.mdf
+*.ldf
