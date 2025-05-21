@@ -23,5 +23,7 @@ public class RestaurantMappingProfile : Profile
                 opt => opt.MapFrom(src => new Address()
                     { City = src.City, Street = src.Street, PostalCode = src.PostalCode }));
 
+        CreateMap<CreateDishDto, Dish>();
+
     }
 }
