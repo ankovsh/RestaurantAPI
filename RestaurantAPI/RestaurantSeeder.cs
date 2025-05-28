@@ -11,12 +11,43 @@ public class RestaurantSeeder
         _dbContext = dbContext;        
     }
     public void Seed()
-{
+    {
         if (!_dbContext.Database.CanConnect()) return;
-        if (_dbContext.Restaurants.Any()) return;
-        var restaurants = GetRestaurants();
-        _dbContext.Restaurants.AddRange(restaurants);
-        _dbContext.SaveChanges();
+        
+        if (!_dbContext.Roles.Any())
+        {
+            var roles = GetRoles();
+            _dbContext.Roles.AddRange(roles);
+            _dbContext.SaveChanges();
+        }
+
+        if (!_dbContext.Restaurants.Any())
+        {
+            var restaurants = GetRestaurants();
+            _dbContext.Restaurants.AddRange(restaurants);
+            _dbContext.SaveChanges();    
+        }
+    }
+
+    private static IEnumerable<Role> GetRoles()
+    {
+        var roles = new List<Role>()
+        {
+            new Role()
+            {
+                Name = "Admin"
+            },
+            new Role()
+            {
+                Name = "Manager"
+            },
+            new Role()
+            {
+                Name = "User"
+            }
+        };
+        
+        return roles;
     }
 
     private static IEnumerable<Restaurant> GetRestaurants()
