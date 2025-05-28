@@ -20,6 +20,7 @@ builder.Host.UseNLog();
 // Add services to the container.
 
 var authenticationSettings = builder.Configuration.GetSection("Authentication").Get<AuthenticationSettings>();
+builder.Services.AddSingleton(authenticationSettings);
 builder.Services.AddAuthentication(option =>
 {
     option.DefaultAuthenticateScheme = "JwtBearer";
@@ -55,6 +56,7 @@ builder.Services.AddScoped<RequestTimeMiddleware>();
 
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
+builder.Services.AddScoped<IValidator<LoginUserDto>, LoginUserDtoValidator>();
 
 var app = builder.Build();
 

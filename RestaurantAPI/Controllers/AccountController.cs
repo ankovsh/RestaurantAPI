@@ -21,4 +21,11 @@ public class AccountController: ControllerBase
         _accountService.RegisterUser(dto);
         return Ok();
     }
+
+    [HttpPost("login")]
+    public ActionResult Login([FromBody] LoginUserDto userDto)
+    {
+        var token = _accountService.GenerateJwt(userDto);
+        return Ok(token);
+    }
 }
