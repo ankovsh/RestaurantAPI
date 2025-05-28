@@ -1,7 +1,9 @@
 using System.Reflection;
+using System.Text;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
 using NLog.Web;
 using RestaurantAPI;
 using RestaurantAPI.Entities;
@@ -16,6 +18,24 @@ builder.Logging.ClearProviders();
 builder.Host.UseNLog();
 
 // Add services to the container.
+
+var authenticationSettings = builder.Configuration.GetSection("Authentication").Get<AuthenticationSettings>();
+builder.Services.AddAuthentication(option =>
+{
+    option.DefaultAuthenticateScheme = "JwtBearer";
+    option.DefaultChallengeScheme = "JwtBearer";
+    option.DefaultScheme = "JwtBearer";
+}).AddJwtBearer(options =>
+{
+    options.RequireHttpsMetadata = false;
+    options.SaveToken = true;
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidIssuer = authenticationSettings.JwtIssuer,
+        ValidAudience = authenticationSettings.JwtIssuer,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationSettings.JwtKey)),
+    };
+});
 
 builder.Services.AddControllers().AddFluentValidation();
 
@@ -55,9 +75,9 @@ using (var scope = app.Services.CreateScope())
 app.UseMiddleware<ErrorHandlingMiddleware>();
 app.UseMiddleware<RequestTimeMiddleware>();
 
-app.UseHttpsRedirection();
+app.UseAuthorization();
 
-//app.UseAuthorization();
+app.UseHttpsRedirection();
 
 app.UseRouting();
 
