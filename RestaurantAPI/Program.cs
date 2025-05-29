@@ -20,12 +20,13 @@ builder.Host.UseNLog();
 // Add services to the container.
 
 var authenticationSettings = builder.Configuration.GetSection("Authentication").Get<AuthenticationSettings>();
+
 builder.Services.AddSingleton(authenticationSettings);
 builder.Services.AddAuthentication(option =>
 {
-    option.DefaultAuthenticateScheme = "JwtBearer";
-    option.DefaultChallengeScheme = "JwtBearer";
-    option.DefaultScheme = "JwtBearer";
+    option.DefaultAuthenticateScheme = "Bearer";
+    option.DefaultChallengeScheme = "Bearer";
+    option.DefaultScheme = "Bearer";
 }).AddJwtBearer(options =>
 {
     options.RequireHttpsMetadata = false;
@@ -77,12 +78,12 @@ using (var scope = app.Services.CreateScope())
 app.UseMiddleware<ErrorHandlingMiddleware>();
 app.UseMiddleware<RequestTimeMiddleware>();
 
-app.UseAuthorization();
+app.UseAuthentication();
 
 app.UseHttpsRedirection();
 
 app.UseRouting();
-
+app.UseAuthorization();
 app.MapControllers();
 
 app.Run();

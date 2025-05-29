@@ -13,5 +13,5 @@ public class RegisterUserDto
     
     public DateTime? DateOfBirth { get; set; }
 
-    public int RoleId { get; set; } = 3;
+    public int RoleId { get; set; }
 }
