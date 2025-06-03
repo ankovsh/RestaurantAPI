@@ -17,20 +17,63 @@ namespace RestaurantAPI.Entities
         {
             modelBuilder.Entity<User>()
                 .Property(u => u.Email)
-                .IsRequired();
+                .IsRequired()
+                .HasMaxLength(100);
+            
+            modelBuilder.Entity<User>()
+                .Property(u => u.FirstName)
+                .IsRequired()
+                .HasMaxLength(100);
+            
+            modelBuilder.Entity<User>()
+                .Property(u => u.LastName)
+                .IsRequired()
+                .HasMaxLength(100);
+            
+            modelBuilder.Entity<User>()
+                .Property(u => u.Nationality)
+                .IsRequired()
+                .HasMaxLength(100);
+            
+            modelBuilder.Entity<User>()
+                .Property(u => u.PasswordHash)
+                .IsRequired()
+                .HasMaxLength(128);
             
             modelBuilder.Entity<Role>()
                 .Property(r => r.Name)
-                .IsRequired();
+                .IsRequired()
+                .HasMaxLength(25);
             
             modelBuilder.Entity<Restaurant>()
                 .Property(r => r.Name)
                 .IsRequired()
                 .HasMaxLength(25);
+            
+            modelBuilder.Entity<Restaurant>()
+                .Property(r => r.Description)
+                .HasMaxLength(100);
+            
+            modelBuilder.Entity<Restaurant>()
+                .Property(r => r.Category)
+                .HasMaxLength(25);
+            
+            modelBuilder.Entity<Restaurant>()
+                .Property(r => r.ContactEmail)
+                .HasMaxLength(100);
+            
+            modelBuilder.Entity<Restaurant>()
+                .Property(r => r.ContactNumber)
+                .HasMaxLength(25);
 
             modelBuilder.Entity<Dish>()
                 .Property(d => d.Name)
-                .IsRequired();
+                .IsRequired()
+                .HasMaxLength(25);
+            
+            modelBuilder.Entity<Dish>()
+                .Property(d => d.Description)
+                .HasMaxLength(100);
 
             modelBuilder.Entity<Address>()
                 .Property(a => a.Street)
@@ -41,6 +84,11 @@ namespace RestaurantAPI.Entities
                 .Property(a => a.City)
                 .IsRequired()
                 .HasMaxLength(50);
+            
+            modelBuilder.Entity<Address>()
+                .Property(a => a.PostalCode)
+                .IsRequired()
+                .HasMaxLength(25);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
