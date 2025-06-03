@@ -41,6 +41,7 @@ public class RestaurantController : ControllerBase
     }
     
     [HttpGet]
+    [Authorize(Policy = "HasNationality")]
     public ActionResult<IEnumerable<RestaurantDto>> GetAll()
     {
         var restaurantDtos = _restaurantService.GetAll();
